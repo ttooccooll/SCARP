@@ -1,0 +1,146 @@
+/* Body background set to dark color */
+body {
+  background-color: #2c3e50; /* Dark blue-gray background */
+  color: white; /* White text color for better contrast */
+  font-family: Arial, sans-serif; /* Set a basic font for readability */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Route instructions container */
+.leaflet-routing-container {
+  padding: 10px;
+    background-color: rgba(
+    44,
+    62,
+    80,
+    0.8
+  ); /* Slightly transparent dark background */
+  border-radius: 8px; /* Optional: for rounded corners */
+  overflow: scroll;
+}
+
+/* Route instructions text */
+.leaflet-routing-container .leaflet-routing-instructions {
+  color: black; /* Ensure text color is black */
+}
+
+/* Optional: style for the route distance */
+.leaflet-routing-container .leaflet-routing-distance {
+  color: #7f8c8d; /* Lighter gray for distance text */
+}
+
+/* Controls container with slight background and padding */
+#controls {
+  background-color: rgba(
+    44,
+    62,
+    80,
+    0.8
+  ); /* Slightly transparent dark background */
+  padding: 40px;
+  border-radius: 10px;
+  margin: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2; /* Keep controls above the map */
+  width: 300px;
+}
+
+/* Map container styling */
+#map {
+  height: 100vh;
+  z-index: 1;
+}
+
+/* Style for form elements */
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input,
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #34495e; /* Darker border for inputs */
+  background-color: #34495e; /* Darker background for inputs */
+  color: white;
+}
+
+button {
+  cursor: pointer;
+  background-color: #16a085; /* A slightly lighter green for the button */
+  border: none;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #1abc9c; /* Lighter on hover */
+}
+
+#cameraList {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  z-index: 2;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(
+    44,
+    62,
+    80,
+    0.8
+  ); /* Slightly transparent dark background */
+}
+
+.camera-item {
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.camera-item:hover {
+  background-color: black;
+  border-left: 4px solid red;
+}
+
+/* Style for the loading spinner */
+#loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  z-index: 3; /* Make sure it's above other elements */
+  display: none; /* Initially hidden */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #16a085; /* Green color for the spinner */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

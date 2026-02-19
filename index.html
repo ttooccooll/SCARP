@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surveillance Camera Avoidance Route Planner</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="libs/polyline.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf"></script>
+  </head>
+  <body>
+    <div id="controls">
+      <label for="startLat">Start Latitude:</label>
+      <input type="number" id="startLat" value="39.9242" />
+      <label for="startLon">Start Longitude:</label>
+      <input type="number" id="startLon" value="-83.8089" />
+
+      <label for="endLat">End Latitude:</label>
+      <input type="number" id="endLat" value="39.8031" />
+      <label for="endLon">End Longitude:</label>
+      <input type="number" id="endLon" value="-83.8898" />
+
+      <button onclick="updateRoute()">Update Route</button>
+    </div>
+
+    <div id="map"></div>
+
+    <div id="loading" style="display: none">
+      <div class="spinner"></div>
+      Loading...
+    </div>
+
+    <div id="cameraList">
+      <h3>Intersecting Cameras:</h3>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
