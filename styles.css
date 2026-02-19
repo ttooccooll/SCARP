@@ -21,6 +21,10 @@ body {
   overflow: scroll;
 }
 
+.leaflet-routing-alternatives-container {
+  overflow: scroll; /* Ensure alternatives container is scrollable */
+}
+
 /* Route instructions text */
 .leaflet-routing-container .leaflet-routing-instructions {
   color: black; /* Ensure text color is black */
