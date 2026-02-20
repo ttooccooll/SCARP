@@ -178,7 +178,6 @@ function avoidCamerasAndRecalculateRoute(camerasToAvoid) {
 }
 
 function recalculateRoute(waypoints) {
-  // Show the loading spinner
   document.getElementById("loading").style.display = "block";
 
   // Log the waypoints array and each waypoint in it for debugging
@@ -196,7 +195,7 @@ function recalculateRoute(waypoints) {
   ) {
     console.error("Invalid waypoints or missing lat/lng data");
     document.getElementById("loading").style.display = "none";
-    return; // Exit if the waypoints are invalid
+    return;
   }
 
   // Access lat/lng directly from the waypoints
@@ -206,12 +205,12 @@ function recalculateRoute(waypoints) {
   const endLon = waypoints[waypoints.length - 1].lng;
 
   const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${startLon},${startLat};${endLon},${endLat}?overview=full&alternatives=true&steps=true`;
-  console.log("OSRM Request URL:", osrmUrl); // Log the URL to ensure it's correct
+  console.log("OSRM Request URL:", osrmUrl);
 
   fetch(osrmUrl)
     .then((response) => response.json())
     .then((data) => {
-      console.log("OSRM Data:", data); // Add this to inspect the response
+      console.log("OSRM Data:", data);
       if (data.routes && data.routes.length > 0) {
         data.routes.forEach((route) => {
           if (route.geometry && route.geometry.coordinates) {
