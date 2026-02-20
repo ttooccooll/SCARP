@@ -14,15 +14,17 @@
   </head>
   <body>
     <div id="controls">
-      <label for="startLat">Start Latitude:</label>
-      <input type="number" id="startLat" value="39.9242" />
-      <label for="startLon">Start Longitude:</label>
-      <input type="number" id="startLon" value="-83.8089" />
+      <h4>Start Address</h4>
+      <input type="text" id="startStreet" placeholder="Street Address" required />
+      <input type="text" id="startCity" placeholder="City" required />
+      <input type="text" id="startState" placeholder="State" required />
+      <input type="text" id="startZip" placeholder="ZIP Code" required />
 
-      <label for="endLat">End Latitude:</label>
-      <input type="number" id="endLat" value="39.8031" />
-      <label for="endLon">End Longitude:</label>
-      <input type="number" id="endLon" value="-83.8898" />
+      <h4>Destination Address</h4>
+      <input type="text" id="endStreet" placeholder="Street Address" required />
+      <input type="text" id="endCity" placeholder="City" required />
+      <input type="text" id="endState" placeholder="State" required />
+      <input type="text" id="endZip" placeholder="ZIP Code" required />
 
       <button onclick="updateRoute()">Update Route</button>
     </div>

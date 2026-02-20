@@ -1,10 +1,6 @@
-// Initialize map
 const map = L.map("map").setView([39.9242, -82.8089], 12); // Starting point (Springfield, OH)
 
-// Overpass API query to find surveillance cameras (used in the fetch function)
 const overpassUrl = "https://overpass-api.de/api/interpreter";
-const url = `https://router.project-osrm.org/route/v1/driving/${startLon},${startLat};${endLon},${endLat}?overview=false&alternatives=true&steps=true`;
-console.log("Routing URL:", url);
 
 // Array to store camera locations
 let cameras = [];
@@ -148,6 +144,39 @@ function checkForCamerasOnRoute() {
   }
 }
 
+async function geocodeAddress(street, city, state, zip) {
+  const params = new URLSearchParams({
+    street: street,
+    city: city,
+    state: state,
+    postalcode: zip,
+    country: "USA",
+    format: "json",
+    limit: 1
+  });
+
+  const url = `https://nominatim.openstreetmap.org/search?${params.toString()}`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Geocoding request failed");
+  }
+
+  const data = await response.json();
+
+  console.log("Geocode response:", data);
+
+  if (!data || data.length === 0) {
+    throw new Error("Address not found");
+  }
+
+  return {
+    lat: parseFloat(data[0].lat),
+    lon: parseFloat(data[0].lon)
+  };
+}
+
 function avoidCamerasAndRecalculateRoute(camerasToAvoid) {
   const waypoints = control.getWaypoints();
   const start = waypoints[0].latLng; // Fixed start point
@@ -198,13 +227,12 @@ function recalculateRoute(waypoints) {
     return;
   }
 
-  // Access lat/lng directly from the waypoints
   const startLat = waypoints[0].lat;
   const startLon = waypoints[0].lng;
   const endLat = waypoints[waypoints.length - 1].lat;
   const endLon = waypoints[waypoints.length - 1].lng;
 
-  const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${startLon},${startLat};${endLon},${endLat}?overview=full&alternatives=true&steps=true`;
+  const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${startLon},${startLat};${endLon},${endLat}?overview=full&geometries=geojson&alternatives=true&steps=true`;
   console.log("OSRM Request URL:", osrmUrl);
 
   fetch(osrmUrl)
@@ -303,46 +331,42 @@ const control = L.Routing.control({
   },
 }).addTo(map);
 
-function updateRoute() {
-  // Show the loading spinner
+async function updateRoute() {
   document.getElementById("loading").style.display = "block";
 
-  // Get coordinates from the input fields
-  const startLat = parseFloat(document.getElementById("startLat").value);
-  const startLon = parseFloat(document.getElementById("startLon").value);
-  const endLat = parseFloat(document.getElementById("endLat").value);
-  const endLon = parseFloat(document.getElementById("endLon").value);
+  try {
+    const start = await geocodeAddress(
+      document.getElementById("startStreet").value,
+      document.getElementById("startCity").value,
+      document.getElementById("startState").value,
+      document.getElementById("startZip").value
+    );
 
-  // Validate coordinates
-  if (isNaN(startLat) || isNaN(startLon) || isNaN(endLat) || isNaN(endLon)) {
-    console.error("Invalid coordinates provided");
-    document.getElementById("loading").style.display = "none";
-    return; // Early return if coordinates are invalid
+    const end = await geocodeAddress(
+      document.getElementById("endStreet").value,
+      document.getElementById("endCity").value,
+      document.getElementById("endState").value,
+      document.getElementById("endZip").value
+    );
+
+    control.setWaypoints([
+      L.latLng(start.lat, start.lon),
+      L.latLng(end.lat, end.lon)
+    ]);
+
+    const routeBounds = L.latLngBounds([
+      L.latLng(start.lat, start.lon),
+      L.latLng(end.lat, end.lon)
+    ]);
+    map.fitBounds(routeBounds);
+
+    checkForCamerasOnRoute();
+
+  } catch (error) {
+    alert("Invalid or incomplete address. Please enter full address.");
+    console.error(error);
   }
 
-  // Remove the existing route (if any)
-  map.removeControl(control);
-
-  // Create a new route with the updated coordinates and custom line options
-  control.setWaypoints([
-    L.latLng(startLat, startLon),
-    L.latLng(endLat, endLon),
-  ]);
-
-  // Add the new route to the map
-  control.addTo(map);
-
-  // Calculate the bounds of the route and fit the map to it
-  const routeBounds = L.latLngBounds([
-    L.latLng(startLat, startLon),
-    L.latLng(endLat, endLon),
-  ]);
-  map.fitBounds(routeBounds);
-
-  // Check if there are cameras near the new route
-  checkForCamerasOnRoute();
-
-  // Hide loading spinner when done
   document.getElementById("loading").style.display = "none";
 }
 
