@@ -19,42 +19,40 @@ body {
   ); /* Slightly transparent dark background */
   border-radius: 8px; /* Optional: for rounded corners */
   overflow: scroll;
+  max-height: 80vh;
 }
 
 .leaflet-routing-alternatives-container {
-  overflow: scroll; /* Ensure alternatives container is scrollable */
+  overflow: scroll;
+  max-height: 80vh;
 }
 
-/* Route instructions text */
 .leaflet-routing-container .leaflet-routing-instructions {
-  color: black; /* Ensure text color is black */
+  color: black;
 }
 
-/* Optional: style for the route distance */
 .leaflet-routing-container .leaflet-routing-distance {
-  color: #7f8c8d; /* Lighter gray for distance text */
+  color: #7f8c8d;
 }
 
-/* Controls container with slight background and padding */
 #controls {
   background-color: rgba(
     44,
     62,
     80,
     0.8
-  ); /* Slightly transparent dark background */
-  padding: 5px;
+  );
+  padding: 40px;
   border-radius: 10px;
   margin: 20px;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 2; /* Keep controls above the map */
+  z-index: 2;
   width: 300px;
 }
 
-/* Map container styling */
 #map {
   height: 100vh;
   z-index: 1;
@@ -93,7 +91,7 @@ button:hover {
   z-index: 2;
   position: absolute;
   bottom: 10px;
-  left: 10px;
+  right: 10px;
   padding: 10px;
   max-height: 300px;
   overflow-y: auto;

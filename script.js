@@ -1,4 +1,4 @@
-const map = L.map("map").setView([39.9242, -82.8089], 12); // Starting point (Springfield, OH)
+const map = L.map("map").setView([39.9242, -82.8089], 12);
 
 const overpassUrl = "https://overpass-api.de/api/interpreter";
 
@@ -313,11 +313,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-// Create the initial routing control (to draw a route)
 const control = L.Routing.control({
   waypoints: [
-    L.latLng(39.9242, -83.8089), // Starting point (Springfield, OH)
-    L.latLng(39.8031, -83.8898), // End point (Yellow Springs, OH)
+    L.latLng(39.9095, -83.8080),
+    L.latLng(39.8031, -83.8898),
   ],
   routeWhileDragging: true, // Allow dragging to update the route
   lineOptions: {
